@@ -1,0 +1,79 @@
+{
+  "_from": "cowsigner",
+  "_id": "cowsigner@1.0.1",
+  "_inBundle": false,
+  "_integrity": "sha512-jc40UC7ENNtgPzcVVo5KJUl3/nRmvJTmrt5S1B94QgW6LM9Y41+U2f55AXQAMyDs64cTYKp4Fr37/uSE1iBv8w==",
+  "_location": "/cowsigner",
+  "_phantomChildren": {
+    "@babel/runtime": "7.19.0",
+    "@noble/ed25519": "1.7.0",
+    "@noble/hashes": "1.1.2",
+    "@noble/secp256k1": "1.6.3",
+    "@project-serum/borsh": "0.2.5",
+    "@solana/buffer-layout": "4.0.0",
+    "base64-js": "1.5.1",
+    "bigint-buffer": "1.1.5",
+    "bn.js": "5.2.1",
+    "borsh": "0.7.0",
+    "bs58": "4.0.1",
+    "buffer": "6.0.1",
+    "buffer-layout": "1.2.2",
+    "camelcase": "5.3.1",
+    "cross-fetch": "3.1.5",
+    "crypto-hash": "1.3.0",
+    "eventemitter3": "4.0.7",
+    "fast-stable-stringify": "1.0.0",
+    "jayson": "3.7.0",
+    "js-sha256": "0.9.0",
+    "node-fetch": "2.6.7",
+    "pako": "2.0.4",
+    "rpc-websockets": "7.5.0",
+    "snake-case": "3.0.4",
+    "toml": "3.0.0"
+  },
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cowsigner",
+    "name": "cowsigner",
+    "escapedName": "cowsigner",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#USER",
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/cowsigner/-/cowsigner-1.0.1.tgz",
+  "_shasum": "997c9eb16538eee0dc0d971510f7994f4b627296",
+  "_spec": "cowsigner",
+  "_where": "/Users/alessandrobuffoli/Development/Blockchain/Solana/solana-twitter/app",
+  "author": {
+    "name": "Cowsigner",
+    "email": "hello@cowsigner.com"
+  },
+  "bundleDependencies": false,
+  "dependencies": {
+    "@project-serum/anchor": "^0.25.0",
+    "@solana/web3.js": "^1.61.1",
+    "axios": "^0.27.2"
+  },
+  "deprecated": false,
+  "description": "",
+  "keywords": [
+    "cowsigner"
+  ],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "cowsigner",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "homepage": "https://app.cowsigner.com/docs",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alebuffoli/cowsigner.npm"
+  },
+  "version": "1.0.3"
+}
