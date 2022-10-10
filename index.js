@@ -1,7 +1,5 @@
 import { web3 } from '@project-serum/anchor'
 import axios from 'axios'
-// import {PublicKey} from "@solana/web3.js";
-
 
 const opts = {
     preflightCommitment: "processed",
@@ -9,27 +7,23 @@ const opts = {
 }
 
 export default {
-    sendInstruction: async function sendInstruction(method, appWallet, contractId) {
+    sendInstruction: async function sendInstruction(method, appWallet, contractId, position_tx_certifier=null) {
 
-        console.log(method.constructor.name)
-        console.log(typeof method)
         const args = method._args
         const aaa = method._ixFn
-        console.log(aaa)
-        console.log(args)
-        console.log(method._accountsResolver._idlIx)
 
         const functionName = method._accountsResolver._idlIx.name
-        console.log(functionName)
+
         const connection = method._accountsResolver._provider.connection
         const wallet = method._accountsResolver._provider.wallet
 
-        console.log('instruction')
         const instruction = method._ixFn(...method._args)
-        console.log(instruction)
 
         let tx = new web3.Transaction();
+
+        method._preInstructions.forEach((ix) => tx.add(ix));
         tx.add(instruction);
+        method._postInstructions.forEach((ix) => tx.add(ix));
 
         tx.feePayer = appWallet
 
@@ -39,12 +33,8 @@ export default {
 
 
         for (const item of method._args) {
-            console.log(typeof item)
             if (typeof item === "object" && 'signers' in item) {
-                console.log(item['signers'])
-
                 for (const sig of item['signers']) {
-                    console.log(sig)
                     tx.partialSign(sig);
                 }
             }
@@ -58,9 +48,14 @@ export default {
         }
         const rawTx = await tx.serialize(config_serializer);
 
+        if (!position_tx_certifier) {
+            position_tx_certifier = method.preInstructions.length
+        }
+
         const payload = {
             raw_transaction: rawTx,
             signer_pubkey: wallet.publicKey,
+            position_tx_certifier: position_tx_certifier
         }
 
         const headers = {
@@ -70,14 +65,15 @@ export default {
         await axios.post(`https://api.cowsigner.com/v1/service/sign/${contractId}`, payload, {headers})
     },
 
-    addSignerToContract: async function addSignerToContract(apikey, customerPubkey, contractId) {
+    addSignerToContract: async function addSignerToContract(apikey, customerPubkey, contractId, accountId) {
         const headers = {
             'Content-Type': 'application/json',
             'apikey': apikey
         }
         const payload = {
             "pubkey": customerPubkey,
-            "block": contractId
+            "block": contractId,
+            "account": accountId
         };
 
         axios.post('https://api.cowsigner.com/v1/service/block-signer/', payload, {headers})
@@ -85,7 +81,7 @@ export default {
                 console.log(JSON.stringify(response.data));
             })
             .catch(function (error) {
-                console.log(error);
+                error.log(error);
             });
     }
 }
