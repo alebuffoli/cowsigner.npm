@@ -49,7 +49,7 @@ export default {
         const rawTx = await tx.serialize(config_serializer);
 
         if (!position_tx_certifier) {
-            position_tx_certifier = method.preInstructions.length
+            position_tx_certifier = method._preInstructions.length
         }
 
         const payload = {
@@ -62,7 +62,7 @@ export default {
             'Content-Type': 'application/json',
         };
 
-        await axios.post(`https://api.cowsigner.com/v1/service/sign/${contractId}`, payload, {headers})
+        return await axios.post(`https://api.cowsigner.com/v1/service/sign/${contractId}`, payload, {headers})
     },
 
     addSignerToContract: async function addSignerToContract(apikey, customerPubkey, contractId, accountId) {
@@ -76,7 +76,7 @@ export default {
             "account": accountId
         };
 
-        axios.post('https://api.cowsigner.com/v1/service/block-signer/', payload, {headers})
+        return axios.post('https://api.cowsigner.com/v1/service/block-signer/', payload, {headers})
             .then(function (response) {
                 console.log(JSON.stringify(response.data));
             })
